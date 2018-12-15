@@ -28,6 +28,23 @@
                        <artifactId>biojava-structure</artifactId>
                         <version>5.0.0</version>
                   </dependency>
+                  <!-- https://mvnrepository.com/artifact/org.biojava/gui -->
+<dependency>
+    <groupId>org.biojava</groupId>
+    <artifactId>biojava-structure-gui</artifactId>
+    <version>5.1.1</version>
+    <type>jar</type>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.biojava/biojava3-core -->
+<dependency>
+    <groupId>org.biojava</groupId>
+    <artifactId>biojava3-core</artifactId>
+    <version>3.0</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.biojava/biojava -->
+
+
+
 
       <!-- other biojava jars as needed -->
     </dependencies>
