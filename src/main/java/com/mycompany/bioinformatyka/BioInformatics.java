@@ -18,11 +18,14 @@ import org.biojava.nbio.core.alignment.template.SequencePair;
 import org.biojava.nbio.core.sequence.DNASequence;
 import org.biojava.nbio.core.sequence.compound.AmbiguityDNACompoundSet;
 import org.biojava.nbio.core.sequence.compound.NucleotideCompound;
+import org.biojava.nbio.structure.align.gui.*;
 
 public class BioInformatics {
 
     public static void main(String[] args) throws Exception {
-
+        
+        
+       AlignmentGui.getInstance();
         String seq1 = "ATAAGC";
         String seq2 = "AAAAACG";
         SimpleGapPenalty gapPenalty= new SimpleGapPenalty(0,0);
