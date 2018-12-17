@@ -1,6 +1,7 @@
 package com.mycompany.bioinformatyka;
 
 
+import java.io.File;
 import org.biojava.nbio.alignment.Alignments;
 import org.biojava.nbio.alignment.Alignments.PairwiseSequenceAlignerType;
 import org.biojava.nbio.alignment.SimpleGapPenalty;
@@ -16,7 +17,7 @@ import java.io.InputStream;
 
 public class Bioinfa2 {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {        
         ProteinSequence query = getFastaSequenceForId("P69905");
         ProteinSequence target = getFastaSequenceForId("P68871");
 
@@ -35,7 +36,9 @@ public class Bioinfa2 {
     }
 
     private static ProteinSequence getFastaSequenceForId(String uniProtId) throws Exception {
-        InputStream in = new FileInputStream(uniProtId+".fasta.txt");
+        ClassLoader classLoader = Bioinfa2.class.getClassLoader();
+	File file = new File(classLoader.getResource(uniProtId +".fasta.txt").getFile());
+        InputStream in = new FileInputStream(file);
         ProteinSequence seq = FastaReaderHelper.readFastaProteinSequence(in).get(uniProtId);
         System.out.printf("Sequence loaded: %s\n\n", seq);
 
