@@ -26,13 +26,19 @@ public class Bioinfa2 {
                 target,
                 PairwiseSequenceAlignerType.LOCAL,
                 new SimpleGapPenalty(-14, -4),
-                SubstitutionMatrixHelper.getBlosum65());
+                SubstitutionMatrixHelper.getBlosum62());
 
         SequencePair<ProteinSequence, AminoAcidCompound> alignment = aligner.getPair();
 
         System.out.println("Alignment: "+ alignment);
 
         System.out.println("Distance: "+ aligner.getDistance());
+        
+        System.out.println("Similarity: " + aligner.getSimilarity());
+        
+        System.out.println("Max score: " + aligner.getMaxScore());
+        
+        System.out.println("Min score: " + aligner.getMinScore());
     }
 
     private static ProteinSequence getFastaSequenceForId(String uniProtId) throws Exception {

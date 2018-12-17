@@ -48,6 +48,8 @@ public class BioInformatics {
         System.out.println("Alignment: \n"+ alignment);
 
         System.out.println("Distance: "+ aligner.getDistance());
+        
+        System.out.println("Similarity: " + aligner.getSimilarity());
 
     }
 }
