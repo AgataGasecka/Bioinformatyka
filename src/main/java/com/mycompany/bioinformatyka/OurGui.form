@@ -154,14 +154,8 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="seq1Input">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seq1InputActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="seq2Input">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="seq2InputActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="seq1Button">
           <Properties>
@@ -201,9 +195,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="GLOBALNIE"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="globalRadioActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="localRadio">
           <Properties>
@@ -212,9 +203,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="LOKALNIE"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="localRadioActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="gopLabel">
           <Properties>
@@ -222,9 +210,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="gopInput">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gopInputActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="gepLabel">
           <Properties>
