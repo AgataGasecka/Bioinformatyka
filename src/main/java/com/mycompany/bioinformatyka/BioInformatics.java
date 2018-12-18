@@ -29,8 +29,8 @@ public class BioInformatics {
         String seq1 = "ATAAGC";
         String seq2 = "AAAAACG";
         SimpleGapPenalty gapPenalty= new SimpleGapPenalty();
-        int gop =0;
-        int gep =0;
+        int gop =1;
+        int gep =1;
         gapPenalty.setOpenPenalty(gop);
         gapPenalty.setExtensionPenalty(gep);
         
@@ -50,6 +50,10 @@ public class BioInformatics {
         System.out.println("Distance: "+ aligner.getDistance());
         
         System.out.println("Similarity: " + aligner.getSimilarity());
+        
+        System.out.println("Max score: " + aligner.getMaxScore());
+        
+        System.out.println("Min score: " + aligner.getMinScore());
 
     }
 }
