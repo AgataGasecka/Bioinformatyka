@@ -8,7 +8,11 @@ package com.mycompany.bioinformatyka;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JTextArea;
+import javax.swing.text.BadLocationException;
 
 /**
  *
@@ -58,18 +62,6 @@ public class OurGui extends javax.swing.JFrame {
 
         seq2Label.setText("Sekwencja 2");
 
-        seq1Input.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                seq1InputActionPerformed(evt);
-            }
-        });
-
-        seq2Input.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                seq2InputActionPerformed(evt);
-            }
-        });
-
         seq1Button.setText("Wgraj plik");
         seq1Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,27 +82,11 @@ public class OurGui extends javax.swing.JFrame {
 
         buttonGroup1.add(globalRadio);
         globalRadio.setText("GLOBALNIE");
-        globalRadio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                globalRadioActionPerformed(evt);
-            }
-        });
 
         buttonGroup1.add(localRadio);
         localRadio.setText("LOKALNIE");
-        localRadio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                localRadioActionPerformed(evt);
-            }
-        });
 
         gopLabel.setText("GOP");
-
-        gopInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                gopInputActionPerformed(evt);
-            }
-        });
 
         gepLabel.setText("GEP");
 
@@ -220,14 +196,6 @@ public class OurGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void seq1InputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seq1InputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_seq1InputActionPerformed
-
-    private void seq2InputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seq2InputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_seq2InputActionPerformed
-
     private void ChooseFile2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseFile2
         int returnVal = fileChooser.showOpenDialog(this);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -256,10 +224,6 @@ public class OurGui extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_ChooseFile1
 
-    private void gopInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gopInputActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_gopInputActionPerformed
-
     private void cleanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanButtonActionPerformed
         seq1Input.setText("");
         seq2Input.setText("");
@@ -269,17 +233,30 @@ public class OurGui extends javax.swing.JFrame {
         
     }//GEN-LAST:event_cleanButtonActionPerformed
 
-    private void localRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localRadioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_localRadioActionPerformed
-
-    private void globalRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_globalRadioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_globalRadioActionPerformed
-
     private void makeResultButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeResultButtonActionPerformed
         BioBackend bioObject = new BioBackend();
-        bioObject.seq1 = seq1Input.getText();
+        try {
+            bioObject.uniProtId1 = seq1Input.getText(1,6);
+            bioObject.uniProtId2 = seq2Input.getText(1,6);
+            bioObject.seq1 = bioObject.getFastaSequenceFromId(bioObject.uniProtId1);
+            bioObject.seq2 = bioObject.getFastaSequenceFromId(bioObject.uniProtId2);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(OurGui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(OurGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        bioObject.gep = Integer.parseInt(gepInput.getText());
+        bioObject.gop = Integer.parseInt(gopInput.getText());
+        if(globalRadio.isSelected()){
+        bioObject.type = bioObject.type.GLOBAL;
+        }
+        else if(localRadio.isSelected()){
+            bioObject.type = bioObject.type.LOCAL;
+        }
+        
+        String[] resultsToShow = bioObject.makeResult();
+        resultTextArea.append(resultsToShow[0] + "\n" + resultsToShow[1] + "\n" + resultsToShow[2]);
+        
     }//GEN-LAST:event_makeResultButtonActionPerformed
 
     /**
