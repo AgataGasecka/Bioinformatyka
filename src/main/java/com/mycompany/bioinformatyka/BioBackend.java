@@ -18,6 +18,10 @@ import org.biojava.nbio.core.sequence.io.FastaReaderHelper;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import org.biojava.nbio.core.exceptions.CompoundNotFoundException;
+import org.biojava.nbio.core.sequence.DNASequence;
+import org.biojava.nbio.core.sequence.compound.AmbiguityDNACompoundSet;
+import org.biojava.nbio.core.sequence.compound.NucleotideCompound;
 /**
  *
  * @author Agata
@@ -28,13 +32,16 @@ public class BioBackend {
     ProteinSequence seq2;
     String uniProtId1;
     String uniProtId2;
+    String dna1;
+    String dna2;
     int gep;
     int gop;
     PairwiseSequenceAlignerType type;
     SubstitutionMatrixHelper substitutionMatrix;
-    String[] results = new String[3];
+    String[] ProteinResults = new String[3];
+    String[] DnaResults = new String[3];
     
-    public String[] makeResult() {
+    public String[] makeResultForProtein() {
         PairwiseSequenceAligner<ProteinSequence, AminoAcidCompound> aligner = Alignments.getPairwiseAligner(
                 seq1,
                 seq2,
@@ -43,20 +50,27 @@ public class BioBackend {
                 SubstitutionMatrixHelper.getBlosum62());
         
         SequencePair<ProteinSequence, AminoAcidCompound> alignment = aligner.getPair();
-        results[0] = "Alignment: " + alignment;
-        results[1] = "Distance: "+ aligner.getDistance();
-        results[2] = "Similarity: " + aligner.getSimilarity();
+        ProteinResults[0] = "Alignment: " + alignment;
+        ProteinResults[1] = "Distance: "+ aligner.getDistance();
+        ProteinResults[2] = "Similarity: " + aligner.getSimilarity();
 
-//        System.out.println("Alignment: "+ alignment);
-//
-//        System.out.println("Distance: "+ aligner.getDistance());
-//        
-//        System.out.println("Similarity: " + aligner.getSimilarity());
-//        
-//        System.out.println("Max score: " + aligner.getMaxScore());
-//        
-//        System.out.println("Min score: " + aligner.getMinScore());
-        return results;
+        return ProteinResults;
+    }
+    
+    public String[] makeResultForDNA() throws CompoundNotFoundException {
+        PairwiseSequenceAligner<DNASequence, NucleotideCompound> aligner = Alignments.getPairwiseAligner(
+                new DNASequence(dna1, AmbiguityDNACompoundSet.getDNACompoundSet()),
+                new DNASequence(dna2, AmbiguityDNACompoundSet.getDNACompoundSet()),
+                type,
+                new SimpleGapPenalty(gop, gep),
+                SubstitutionMatrixHelper.getNuc4_4());
+        
+        SequencePair<DNASequence, NucleotideCompound> alignment = aligner.getPair();
+        DnaResults[0] = "Alignment: " + "\n" +alignment;
+        DnaResults[1] = "Distance: "+ aligner.getDistance();
+        DnaResults[2] = "Similarity: " + aligner.getSimilarity();
+
+        return DnaResults;
     }
     
     public ProteinSequence getFastaSequenceFromId(String uniProtId) throws Exception {

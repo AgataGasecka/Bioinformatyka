@@ -30,7 +30,7 @@ public class Bioinfa2 {
 
         SequencePair<ProteinSequence, AminoAcidCompound> alignment = aligner.getPair();
 
-        System.out.println("Alignment: "+ alignment);
+        System.out.println("Alignment: \n"+ alignment);
 
         System.out.println("Distance: "+ aligner.getDistance());
         
