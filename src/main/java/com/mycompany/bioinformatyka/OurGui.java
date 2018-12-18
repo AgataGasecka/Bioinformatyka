@@ -122,6 +122,11 @@ public class OurGui extends javax.swing.JFrame {
         });
 
         makeResultButton.setText("Wykonaj");
+        makeResultButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                makeResultButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -271,6 +276,11 @@ public class OurGui extends javax.swing.JFrame {
     private void globalRadioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_globalRadioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_globalRadioActionPerformed
+
+    private void makeResultButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeResultButtonActionPerformed
+        BioBackend bioObject = new BioBackend();
+        bioObject.seq1 = seq1Input.getText();
+    }//GEN-LAST:event_makeResultButtonActionPerformed
 
     /**
      * @param args the command line arguments
