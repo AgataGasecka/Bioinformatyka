@@ -13,6 +13,9 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JTextArea;
 import javax.swing.text.BadLocationException;
+import org.biojava.nbio.core.exceptions.CompoundNotFoundException;
+import org.biojava.nbio.core.sequence.DNASequence;
+import org.biojava.nbio.core.sequence.compound.AmbiguityDNACompoundSet;
 
 /**
  *
@@ -234,17 +237,9 @@ public class OurGui extends javax.swing.JFrame {
     }//GEN-LAST:event_cleanButtonActionPerformed
 
     private void makeResultButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_makeResultButtonActionPerformed
+        resultTextArea.setText("");
         BioBackend bioObject = new BioBackend();
-        try {
-            bioObject.uniProtId1 = seq1Input.getText(1,6);
-            bioObject.uniProtId2 = seq2Input.getText(1,6);
-            bioObject.seq1 = bioObject.getFastaSequenceFromId(bioObject.uniProtId1);
-            bioObject.seq2 = bioObject.getFastaSequenceFromId(bioObject.uniProtId2);
-        } catch (BadLocationException ex) {
-            Logger.getLogger(OurGui.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(OurGui.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         bioObject.gep = Integer.parseInt(gepInput.getText());
         bioObject.gop = Integer.parseInt(gopInput.getText());
         if(globalRadio.isSelected()){
@@ -254,8 +249,35 @@ public class OurGui extends javax.swing.JFrame {
             bioObject.type = bioObject.type.LOCAL;
         }
         
-        String[] resultsToShow = bioObject.makeResult();
-        resultTextArea.append(resultsToShow[0] + "\n" + resultsToShow[1] + "\n" + resultsToShow[2]);
+        if(seq1Input.getText().contains(">") || seq2Input.getText().contains(">")){
+            try {
+                bioObject.uniProtId1 = seq1Input.getText(1,6);
+                bioObject.uniProtId2 = seq2Input.getText(1,6);
+                bioObject.seq1 = bioObject.getFastaSequenceFromId(bioObject.uniProtId1);
+                bioObject.seq2 = bioObject.getFastaSequenceFromId(bioObject.uniProtId2);
+                String[] resultsToShow = bioObject.makeResultForProtein();
+                resultTextArea.append(resultsToShow[0] + "\n" + resultsToShow[1] + "\n" + resultsToShow[2]);
+            } catch (BadLocationException ex) {
+                Logger.getLogger(OurGui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(OurGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            
+            try {
+                bioObject.dna1 = seq1Input.getText();
+                bioObject.dna2 = seq2Input.getText();
+               String[] resultsToShow = bioObject.makeResultForDNA();
+               resultTextArea.append(resultsToShow[0] + "\n" + resultsToShow[1] + "\n" + resultsToShow[2]);
+            } catch (CompoundNotFoundException ex) {
+                Logger.getLogger(OurGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        
+        
+       
         
     }//GEN-LAST:event_makeResultButtonActionPerformed
 
